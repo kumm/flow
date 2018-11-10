@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import com.vaadin.flow.component.AbstractSinglePropertyField;
 import com.vaadin.flow.component.HasValue;
+import com.vaadin.flow.component.HasValue.ValueChangeEvent;
 
 /**
  * An interface, denoting that the component is able to change the way its value
@@ -51,4 +52,26 @@ public interface HasValueChangeMode extends Serializable {
      *            synchronization
      */
     void setValueChangeMode(ValueChangeMode valueChangeMode);
+
+    /**
+     * Sets how often {@link ValueChangeEvent}s are triggered
+     * when the ValueChangeMode is set to {@link ValueChangeMode#LAZY}.
+     *
+     * @param valueChangeTimeout
+     *            the timeout in milliseconds of how often
+     *            {@link ValueChangeEvent}s are triggered.
+     */
+    default void setValueChangeTimeout(int valueChangeTimeout) {
+    }
+
+    /**
+     * Returns the currently set timeout, for how often {@link ValueChangeEvent}s are triggered
+     * when the ValueChangeMode is set to {@link ValueChangeMode#LAZY}.
+     *
+     * @return the timeout in milliseconds of how often
+     *         {@link ValueChangeEvent}s are triggered.
+     */
+    default int getValueChangeTimeout() {
+        return 0;
+    }
 }

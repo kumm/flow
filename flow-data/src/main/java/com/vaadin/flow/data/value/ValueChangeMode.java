@@ -34,6 +34,12 @@ public enum ValueChangeMode {
     EAGER,
 
     /**
+     * On every user event, schedule a synchronization after a defined interval,
+     * cancelling the currently-scheduled event if any.
+     */
+    LAZY,
+
+    /**
      * Syncs the value to the server on {@code blur} event, i.e. when the
      * component looses focus.
      *
@@ -79,6 +85,7 @@ public enum ValueChangeMode {
         case ON_BLUR:
             return "blur";
         case ON_CHANGE:
+        case LAZY:
             return "change";
         default:
             throw new IllegalArgumentException(

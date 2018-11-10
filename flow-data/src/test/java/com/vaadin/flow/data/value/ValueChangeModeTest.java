@@ -44,8 +44,14 @@ public class ValueChangeModeTest {
         Assert.assertEquals(0,
                 field.getElement().getSynchronizedPropertyEvents().count());
 
+        field.setValueChangeMode(ValueChangeMode.ON_CHANGE);
+        assertValueSynchronizedWithEvent(field, "change");
+
         field.setValueChangeMode(ValueChangeMode.EAGER);
         assertValueSynchronizedWithEvent(field, "value-changed");
+
+        field.setValueChangeMode(ValueChangeMode.LAZY);
+        assertValueSynchronizedWithEvent(field, "change");
     }
 
     private void assertValueSynchronizedWithEvent(Component component,
