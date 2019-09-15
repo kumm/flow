@@ -45,6 +45,7 @@ import com.vaadin.flow.internal.nodefeature.ReconnectDialogConfigurationMap;
 import com.vaadin.flow.router.AfterNavigationListener;
 import com.vaadin.flow.router.BeforeEnterListener;
 import com.vaadin.flow.router.BeforeLeaveListener;
+import com.vaadin.flow.router.BeforePreserveListener;
 import com.vaadin.flow.router.EventUtil;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Location;
@@ -1011,6 +1012,11 @@ public class UI extends Component
             AfterNavigationListener listener) {
         Objects.requireNonNull(listener, NULL_LISTENER);
         return internals.addAfterNavigationListener(listener);
+    }
+
+    public Registration addBeforePreserveListener(BeforePreserveListener listener) {
+        Objects.requireNonNull(listener, NULL_LISTENER);
+        return internals.addBeforePreserveListener(listener);
     }
 
     /**

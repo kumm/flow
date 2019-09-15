@@ -138,6 +138,13 @@ public final class EventUtil {
 
     }
 
+    public static List<BeforePreserveObserver> collectBeforePreserveObservers(
+            UI ui) {
+        return getImplementingComponents(flattenDescendants(ui.getElement()),
+                BeforePreserveObserver.class).collect(Collectors.toList());
+
+    }
+
     /**
      * Collect all Components implementing {@link LocaleChangeObserver}
      * connected to the given element tree.

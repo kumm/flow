@@ -42,6 +42,8 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.BeforeLeaveEvent;
 import com.vaadin.flow.router.BeforeLeaveEvent.ContinueNavigationAction;
 import com.vaadin.flow.router.BeforeLeaveObserver;
+import com.vaadin.flow.router.BeforePreserveEvent;
+import com.vaadin.flow.router.BeforePreserveListener;
 import com.vaadin.flow.router.ErrorNavigationEvent;
 import com.vaadin.flow.router.ErrorParameter;
 import com.vaadin.flow.router.EventUtil;
@@ -340,6 +342,12 @@ public abstract class AbstractNavigationStateRenderer
                 .forEach(listener -> listener.afterNavigation(event));
     }
 
+    private void fireBeforePreserveListeners(BeforePreserveEvent event,
+            List<BeforePreserveHandler> beforePreserveHandlers) {
+        beforePreserveHandlers
+                .forEach(listener -> listener.beforePreserve(event));
+    }
+
     /**
      * Inform any {@link BeforeLeaveObserver}s in detaching element chain.
      *
@@ -502,6 +510,16 @@ public abstract class AbstractNavigationStateRenderer
                 final HasElement root = chain.get(chain.size()-1);
                 final Component component = (Component) chain.get(0);
                 final Optional<UI> maybePrevUI = component.getUI();
+
+                // fire preserve event for all components in the chain
+                List<BeforePreserveHandler> beforePreserveHandlers = new ArrayList<>(
+                        ui.getNavigationListeners(BeforePreserveListener.class));
+                beforePreserveHandlers
+                        .addAll(EventUtil.collectBeforePreserveObservers(ui));
+
+                fireBeforePreserveListeners(
+                        new BeforePreserveEvent(event, chain),
+                        beforePreserveHandlers);
 
                 // Remove the top-level component from the tree
                 root.getElement().removeFromTree();

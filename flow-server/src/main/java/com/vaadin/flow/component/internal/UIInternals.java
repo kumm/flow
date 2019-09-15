@@ -59,6 +59,7 @@ import com.vaadin.flow.router.AfterNavigationListener;
 import com.vaadin.flow.router.BeforeEnterListener;
 import com.vaadin.flow.router.BeforeLeaveEvent.ContinueNavigationAction;
 import com.vaadin.flow.router.BeforeLeaveListener;
+import com.vaadin.flow.router.BeforePreserveListener;
 import com.vaadin.flow.router.ListenerPriority;
 import com.vaadin.flow.router.Location;
 import com.vaadin.flow.router.Router;
@@ -476,6 +477,11 @@ public class UIInternals implements Serializable {
     public Registration addAfterNavigationListener(
             AfterNavigationListener listener) {
         return addListener(AfterNavigationHandler.class, listener);
+    }
+
+    public Registration addBeforePreserveListener(
+            BeforePreserveListener listener) {
+        return addListener(BeforePreserveListener.class, listener);
     }
 
     public Registration addHeartbeatListener(HeartbeatListener listener) {
